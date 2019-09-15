@@ -11,4 +11,10 @@ function renderButtons(){
         $('#buttons-view').append(a);
     }
 }
+    $('#add-gif').on('click',function(event){
+        event.preventDefault();
+        var tvShow = $('#gif-search').val().trim();
+        tvShows.push(tvShow);
+        renderButtons();
+    })
     renderButtons();
