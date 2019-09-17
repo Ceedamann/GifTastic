@@ -52,12 +52,13 @@ $(document).on('click', '.gif-button',function(){
             // set variable to created div//
             var gifDiv =$('<div>');
             // adding class
-            gifDiv.addClass('gifs');
+            gifDiv.addClass('gif');
             //created variable to hold p tag for rating//
             var p = $('<p>').text("Rating: " + results[a].rating);
             // var for img tag//
-            var gifImage = $('<img>');      
-            // attribute to add animate and still images  //    
+            var gifImage = $('<img>');  
+            gifImage.addClass('gifs')    
+            // attributes to add animate and still images  //    
             gifImage.attr('src', results[a].images.fixed_height_still.url);
             gifImage.attr('data-still', results[a].images.fixed_height_still.url);
             gifImage.attr('data-animate', results[a].images.fixed_height.url);
@@ -68,20 +69,20 @@ $(document).on('click', '.gif-button',function(){
             $('#gifsHere').prepend(gifDiv);          
         }
 
+
+        
+    });
+});
         // on click funtion to switch src from animate to still ////
-        $(document).on("click", "img", function (){
+        $(document).on("click", ".gifs", function (){
             var state = $(this).attr("data-state");
             if (state === "still"){
                 $(this).attr("src", $(this).attr("data-animate"));
                 $(this).attr("data-state", "animate");
-            }else{
+            }else if (state === "animate"){
                 $(this).attr("src", $(this).attr("data-still"));
                 $(this).attr("data-state", "still");
             }
         });
-        
-    });
-});
-
 
     renderButtons();
