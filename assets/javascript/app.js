@@ -1,4 +1,4 @@
-var tvShows =['Chappelles Show','TWD','The Office','Hero Academia'];
+var tvShows =['Chappelles Show','TWD','The Office','Hero Academia','This is America'];
 var queryURL = "https://api.giphy.com/v1/gifs/trending?api_key=2j1brct1vXBta8bqyeIKM7ERP2kia1nO"
 
 
@@ -19,6 +19,7 @@ function renderButtons(){
     $('#add-gif').on('click',function(event){
         event.preventDefault();
         var tvShow = $('#gif-search').val().trim();
+        $("#gif-search").val("");
         tvShows.push(tvShow);
         renderButtons();
     })
@@ -41,12 +42,26 @@ $(document).on('click', '.gif-button',function(){
             var p = $('<p>').text("Rating: " + results[a].rating);
             var gifImage = $('<img>');            
             gifImage.attr('src', results[a].images.fixed_height_still.url);
+            gifImage.attr('data-still', results[a].images.fixed_height_still.url);
+            gifImage.attr('data-animate', results[a].images.fixed_height.url);
+            gifImage.attr('data-state', 'still');
             gifDiv.append(p);
             gifDiv.append(gifImage);
-            $('#gifsHere').prepend(gifDiv);
-            
+            $('#gifsHere').prepend(gifDiv);          
         }
+        $(document).on("click", "img", function (){
+            var state = $(this).attr("data-state");
+            if (state === "still"){
+                $(this).attr("src", $(this).attr("data-animate"));
+                $(this).attr("data-state", "animate");
+            }else{
+                $(this).attr("src", $(this).attr("data-still"));
+                $(this).attr("data-state", "still");
+            }
+        });
         
-    })
-})
+    });
+});
+
+
     renderButtons();
